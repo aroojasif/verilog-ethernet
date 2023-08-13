@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools"]
+
+[project]
+name = "verilog_ethernet"
+version = "1.0.0"
+description = "verilog-ethernet packaged for tsfpga and with VHDL components declaration."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {file = "COPYING"}
+dependencies = [
+    "tsfpga",
+]
+[tool.setuptools.packages]
+find = {}

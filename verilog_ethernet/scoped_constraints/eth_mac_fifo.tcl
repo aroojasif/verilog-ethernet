@@ -1,4 +1,5 @@
 # Copyright (c) 2019 Alex Forencich
+# Copyright (c) 2020 Nico De Simone
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,34 +21,28 @@
 
 # Ethernet MAC with FIFO timing constraints
 
-foreach mac_inst [get_cells -hier -filter {(ORIG_REF_NAME == eth_mac_1g_fifo || REF_NAME == eth_mac_1g_fifo || \
-            ORIG_REF_NAME == eth_mac_10g_fifo || REF_NAME == eth_mac_10g_fifo || \
-            ORIG_REF_NAME == eth_mac_1g_gmii_fifo || REF_NAME == eth_mac_1g_gmii_fifo || \
-            ORIG_REF_NAME == eth_mac_1g_rgmii_fifo || REF_NAME == eth_mac_1g_rgmii_fifo || \
-            ORIG_REF_NAME == eth_mac_mii_fifo || REF_NAME == eth_mac_mii_fifo)}] {
-    puts "Inserting timing constraints for ethernet MAC with FIFO instance $mac_inst"
+puts "Inserting timing constraints for ethernet MAC with FIFO instances"
 
-    set sync_ffs [get_cells -hier -regexp ".*/rx_sync_reg_\[1234\]_reg\\\[\\d+\\\]" -filter "PARENT == $mac_inst"]
+set sync_ffs [get_cells -hier -regexp ".*/rx_sync_reg_\[1234\]_reg\\\[\\d+\\\]"]
 
-    if {[llength $sync_ffs]} {
-        set_property ASYNC_REG TRUE $sync_ffs
+if {[llength $sync_ffs]} {
+    set_property ASYNC_REG TRUE $sync_ffs
 
-        set src_clk [get_clocks -of_objects [get_pins $mac_inst/rx_sync_reg_1_reg[*]/C]]
+    set src_clk [get_clocks -of_objects [get_pins rx_sync_reg_1_reg[*]/C]]
 
-        set src_clk_period [if {[llength $src_clk]} {get_property -min PERIOD $src_clk} {expr 8.0}]
+    set src_clk_period [if {[llength $src_clk]} {get_property -min PERIOD $src_clk} {expr 8.0}]
 
-        set_max_delay -from [get_cells $mac_inst/rx_sync_reg_1_reg[*]] -to [get_cells $mac_inst/rx_sync_reg_2_reg[*]] -datapath_only $src_clk_period
-    }
-
-    set sync_ffs [get_cells -hier -regexp ".*/tx_sync_reg_\[1234\]_reg\\\[\\d+\\\]" -filter "PARENT == $mac_inst"]
-
-    if {[llength $sync_ffs]} {
-        set_property ASYNC_REG TRUE $sync_ffs
-
-        set src_clk [get_clocks -of_objects [get_pins $mac_inst/tx_sync_reg_1_reg[*]/C]]
-
-        set src_clk_period [if {[llength $src_clk]} {get_property -min PERIOD $src_clk} {expr 8.0}]
-
-        set_max_delay -from [get_cells $mac_inst/tx_sync_reg_1_reg[*]] -to [get_cells $mac_inst/tx_sync_reg_2_reg[*]] -datapath_only $src_clk_period
-    }
+    set_max_delay -from [get_cells rx_sync_reg_1_reg[*]] -to [get_cells rx_sync_reg_2_reg[*]] -datapath_only $src_clk_period
 }
+
+set sync_ffs [get_cells -hier -regexp ".*/tx_sync_reg_\[1234\]_reg\\\[\\d+\\\]"]
+
+if {[llength $sync_ffs]} {
+    set_property ASYNC_REG TRUE $sync_ffs
+
+    set src_clk [get_clocks -of_objects [get_pins tx_sync_reg_1_reg[*]/C]]
+
+    set src_clk_period [if {[llength $src_clk]} {get_property -min PERIOD $src_clk} {expr 8.0}]
+
+    set_max_delay -from [get_cells tx_sync_reg_1_reg[*]] -to [get_cells tx_sync_reg_2_reg[*]] -datapath_only $src_clk_period
+    }

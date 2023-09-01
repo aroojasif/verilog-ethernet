@@ -35,6 +35,15 @@ class Module(BaseModule):
         )
         return sim_folders
 
+    def get_scoped_constraints(self, files_include=None, files_avoid=None, **kwargs):
+        constraints = super().get_scoped_constraints(files_include, files_avoid, **kwargs)
+
+        # Use myy_phy_if.tcl only in implementation.  In synthesis Vivavdo
+        # 2023.1 throws a cell not found error.
+        mii_phy_if_constraint = next(c for c in constraints if c.file.name == 'mii_phy_if.tcl')
+        mii_phy_if_constraint.used_in = "impl"
+
+        return constraints
 
 if __name__ == "__main__":
     m = Module(path=Path(), library_name='verilog_ethernet')

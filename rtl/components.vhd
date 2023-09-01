@@ -6,7 +6,7 @@
 -- Author     : Nico De Simone  <nico.desimone@desy.de>
 -- Company    : DESY
 -- Created    : 2023-05-31
--- Last update: 2023-06-13
+-- Last update: 2023-10-11
 -- Platform   :
 -- Standard   : VHDL'08
 -------------------------------------------------------------------------------
@@ -52,24 +52,24 @@ package components is
                   rst                : in  std_logic;
                   logic_clk          : in  std_logic;
                   logic_rst          : in  std_logic;
-                  tx_axis_tdata      : in  unsigned(AXIS_DATA_WIDTH-1 downto 0);
-                  tx_axis_tkeep      : in  unsigned(AXIS_KEEP_WIDTH-1 downto 0) := (others => '-');
+                  tx_axis_tdata      : in  std_ulogic_vector(AXIS_DATA_WIDTH-1 downto 0);
+                  tx_axis_tkeep      : in  std_ulogic_vector(AXIS_KEEP_WIDTH-1 downto 0) := (others => '-');
                   tx_axis_tvalid     : in  std_logic;
                   tx_axis_tready     : out std_logic;
                   tx_axis_tlast      : in  std_logic;
                   tx_axis_tuser      : in  std_logic;
-                  rx_axis_tdata      : out unsigned(AXIS_DATA_WIDTH-1 downto 0);
-                  rx_axis_tkeep      : out unsigned(AXIS_KEEP_WIDTH-1 downto 0);
+                  rx_axis_tdata      : out std_ulogic_vector(AXIS_DATA_WIDTH-1 downto 0);
+                  rx_axis_tkeep      : out std_ulogic_vector(AXIS_KEEP_WIDTH-1 downto 0);
                   rx_axis_tvalid     : out std_logic;
                   rx_axis_tready     : in  std_logic;
                   rx_axis_tlast      : out std_logic;
                   rx_axis_tuser      : out std_logic;
                   mii_rx_clk         : in  std_logic;
-                  mii_rxd            : in  unsigned(3 downto 0);
+                  mii_rxd            : in  std_ulogic_vector(3 downto 0);
                   mii_rx_dv          : in  std_logic;
                   mii_rx_er          : in  std_logic;
                   mii_tx_clk         : in  std_logic;
-                  mii_txd            : out unsigned(3 downto 0);
+                  mii_txd            : out std_ulogic_vector(3 downto 0);
                   mii_tx_en          : out std_logic;
                   mii_tx_er          : out std_logic;
                   tx_error_underflow : out std_logic;
@@ -93,19 +93,19 @@ package components is
             port (
                   clk                            : in  std_logic;
                   rst                            : in  std_logic;
-                  s_axis_tdata                   : in  unsigned(DATA_WIDTH-1 downto 0);
-                  s_axis_tkeep                   : in  unsigned(KEEP_WIDTH-1 downto 0) := (others => '-');
+                  s_axis_tdata                   : in  std_ulogic_vector(DATA_WIDTH-1 downto 0);
+                  s_axis_tkeep                   : in  std_ulogic_vector(KEEP_WIDTH-1 downto 0) := (others => '-');
                   s_axis_tvalid                  : in  std_logic;
                   s_axis_tready                  : out std_logic;
                   s_axis_tlast                   : in  std_logic;
                   s_axis_tuser                   : in  std_logic;
                   m_eth_hdr_valid                : out std_logic;
                   m_eth_hdr_ready                : in  std_logic;
-                  m_eth_dest_mac                 : out unsigned(47 downto 0);
-                  m_eth_src_mac                  : out unsigned(47 downto 0);
-                  m_eth_type                     : out unsigned(15 downto 0);
-                  m_eth_payload_axis_tdata       : out unsigned(DATA_WIDTH-1 downto 0);
-                  m_eth_payload_axis_tkeep       : out unsigned(KEEP_WIDTH-1 downto 0);
+                  m_eth_dest_mac                 : out std_ulogic_vector(47 downto 0);
+                  m_eth_src_mac                  : out std_ulogic_vector(47 downto 0);
+                  m_eth_type                     : out std_ulogic_vector(15 downto 0);
+                  m_eth_payload_axis_tdata       : out std_ulogic_vector(DATA_WIDTH-1 downto 0);
+                  m_eth_payload_axis_tkeep       : out std_ulogic_vector(KEEP_WIDTH-1 downto 0);
                   m_eth_payload_axis_tvalid      : out std_logic;
                   m_eth_payload_axis_tready      : in  std_logic;
                   m_eth_payload_axis_tlast       : out std_logic;
@@ -124,17 +124,17 @@ package components is
                   rst                       : in  std_logic;
                   s_eth_hdr_valid           : in  std_logic;
                   s_eth_hdr_ready           : out std_logic;
-                  s_eth_dest_mac            : in  unsigned(47 downto 0);
-                  s_eth_src_mac             : in  unsigned(47 downto 0);
-                  s_eth_type                : in  unsigned(15 downto 0);
-                  s_eth_payload_axis_tdata  : in  unsigned(DATA_WIDTH-1 downto 0);
-                  s_eth_payload_axis_tkeep  : in  unsigned(KEEP_WIDTH-1 downto 0) := (others => '-');
+                  s_eth_dest_mac            : in  std_ulogic_vector(47 downto 0);
+                  s_eth_src_mac             : in  std_ulogic_vector(47 downto 0);
+                  s_eth_type                : in  std_ulogic_vector(15 downto 0);
+                  s_eth_payload_axis_tdata  : in  std_ulogic_vector(DATA_WIDTH-1 downto 0);
+                  s_eth_payload_axis_tkeep  : in  std_ulogic_vector(KEEP_WIDTH-1 downto 0) := (others => '-');
                   s_eth_payload_axis_tvalid : in  std_logic;
                   s_eth_payload_axis_tready : out std_logic;
                   s_eth_payload_axis_tlast  : in  std_logic;
                   s_eth_payload_axis_tuser  : in  std_logic;
-                  m_axis_tdata              : out unsigned(DATA_WIDTH-1 downto 0);
-                  m_axis_tkeep              : out unsigned(KEEP_WIDTH-1 downto 0);
+                  m_axis_tdata              : out std_ulogic_vector(DATA_WIDTH-1 downto 0);
+                  m_axis_tkeep              : out std_ulogic_vector(KEEP_WIDTH-1 downto 0);
                   m_axis_tvalid             : out std_logic;
                   m_axis_tready             : in  std_logic;
                   m_axis_tlast              : out std_logic;
@@ -157,10 +157,10 @@ package components is
 
                   s_eth_hdr_valid           : in  std_logic;
                   s_eth_hdr_ready           : out std_logic;
-                  s_eth_dest_mac            : in  unsigned(47 downto 0);
-                  s_eth_src_mac             : in  unsigned(47 downto 0);
-                  s_eth_type                : in  unsigned(15 downto 0);
-                  s_eth_payload_axis_tdata  : in  unsigned(7 downto 0);
+                  s_eth_dest_mac            : in  std_ulogic_vector(47 downto 0);
+                  s_eth_src_mac             : in  std_ulogic_vector(47 downto 0);
+                  s_eth_type                : in  std_ulogic_vector(15 downto 0);
+                  s_eth_payload_axis_tdata  : in  std_ulogic_vector(7 downto 0);
                   s_eth_payload_axis_tvalid : in  std_logic;
                   s_eth_payload_axis_tready : out std_logic;
                   s_eth_payload_axis_tlast  : in  std_logic;
@@ -168,10 +168,10 @@ package components is
 
                   m_eth_hdr_valid           : out std_logic;
                   m_eth_hdr_ready           : in  std_logic;
-                  m_eth_dest_mac            : out unsigned(47 downto 0);
-                  m_eth_src_mac             : out unsigned(47 downto 0);
-                  m_eth_type                : out unsigned(15 downto 0);
-                  m_eth_payload_axis_tdata  : out unsigned(7 downto 0);
+                  m_eth_dest_mac            : out std_ulogic_vector(47 downto 0);
+                  m_eth_src_mac             : out std_ulogic_vector(47 downto 0);
+                  m_eth_type                : out std_ulogic_vector(15 downto 0);
+                  m_eth_payload_axis_tdata  : out std_ulogic_vector(7 downto 0);
                   m_eth_payload_axis_tvalid : out std_logic;
                   m_eth_payload_axis_tready : in  std_logic;
                   m_eth_payload_axis_tlast  : out std_logic;
@@ -179,14 +179,14 @@ package components is
 
                   s_ip_hdr_valid           : in  std_logic;
                   s_ip_hdr_ready           : out std_logic;
-                  s_ip_dscp                : in  unsigned(5 downto 0);
-                  s_ip_ecn                 : in  unsigned(1 downto 0);
+                  s_ip_dscp                : in  std_ulogic_vector(5 downto 0);
+                  s_ip_ecn                 : in  std_ulogic_vector(1 downto 0);
                   s_ip_length              : in  unsigned(15 downto 0);
                   s_ip_ttl                 : in  unsigned(7 downto 0);
                   s_ip_protocol            : in  unsigned(7 downto 0);
                   s_ip_source_ip           : in  unsigned(31 downto 0);
                   s_ip_dest_ip             : in  unsigned(31 downto 0);
-                  s_ip_payload_axis_tdata  : in  unsigned(7 downto 0);
+                  s_ip_payload_axis_tdata  : in  std_ulogic_vector(7 downto 0);
                   s_ip_payload_axis_tvalid : in  std_logic;
                   s_ip_payload_axis_tready : out std_logic;
                   s_ip_payload_axis_tlast  : in  std_logic;
@@ -194,23 +194,23 @@ package components is
 
                   m_ip_hdr_valid           : out std_logic;
                   m_ip_hdr_ready           : in  std_logic;
-                  m_ip_eth_dest_mac        : out unsigned(47 downto 0);
-                  m_ip_eth_src_mac         : out unsigned(47 downto 0);
-                  m_ip_eth_type            : out unsigned(15 downto 0);
+                  m_ip_eth_dest_mac        : out std_ulogic_vector(47 downto 0);
+                  m_ip_eth_src_mac         : out std_ulogic_vector(47 downto 0);
+                  m_ip_eth_type            : out std_ulogic_vector(15 downto 0);
                   m_ip_version             : out unsigned(3 downto 0);
                   m_ip_ihl                 : out unsigned(3 downto 0);
-                  m_ip_dscp                : out unsigned(5 downto 0);
-                  m_ip_ecn                 : out unsigned(1 downto 0);
+                  m_ip_dscp                : out std_ulogic_vector(5 downto 0);
+                  m_ip_ecn                 : out std_ulogic_vector(1 downto 0);
                   m_ip_length              : out unsigned(15 downto 0);
                   m_ip_identification      : out unsigned(15 downto 0);
-                  m_ip_flags               : out unsigned(2 downto 0);
+                  m_ip_flags               : out std_ulogic_vector(2 downto 0);
                   m_ip_fragment_offset     : out unsigned(12 downto 0);
                   m_ip_ttl                 : out unsigned(7 downto 0);
                   m_ip_protocol            : out unsigned(7 downto 0);
-                  m_ip_header_checksum     : out unsigned(15 downto 0);
+                  m_ip_header_checksum     : out std_ulogic_vector(15 downto 0);
                   m_ip_source_ip           : out unsigned(31 downto 0);
                   m_ip_dest_ip             : out unsigned(31 downto 0);
-                  m_ip_payload_axis_tdata  : out unsigned(7 downto 0);
+                  m_ip_payload_axis_tdata  : out std_ulogic_vector(7 downto 0);
                   m_ip_payload_axis_tvalid : out std_logic;
                   m_ip_payload_axis_tready : in  std_logic;
                   m_ip_payload_axis_tlast  : out std_logic;
@@ -218,16 +218,16 @@ package components is
 
                   s_udp_hdr_valid           : in  std_logic;
                   s_udp_hdr_ready           : out std_logic;
-                  s_udp_ip_dscp             : in  unsigned(5 downto 0);
-                  s_udp_ip_ecn              : in  unsigned(1 downto 0);
+                  s_udp_ip_dscp             : in  std_ulogic_vector(5 downto 0);
+                  s_udp_ip_ecn              : in  std_ulogic_vector(1 downto 0);
                   s_udp_ip_ttl              : in  unsigned(7 downto 0);
                   s_udp_ip_source_ip        : in  unsigned(31 downto 0);
                   s_udp_ip_dest_ip          : in  unsigned(31 downto 0);
                   s_udp_source_port         : in  unsigned(15 downto 0);
                   s_udp_dest_port           : in  unsigned(15 downto 0);
                   s_udp_length              : in  unsigned(15 downto 0);
-                  s_udp_checksum            : in  unsigned(15 downto 0);
-                  s_udp_payload_axis_tdata  : in  unsigned(7 downto 0);
+                  s_udp_checksum            : in  std_ulogic_vector(15 downto 0);
+                  s_udp_payload_axis_tdata  : in  std_ulogic_vector(7 downto 0);
                   s_udp_payload_axis_tvalid : in  std_logic;
                   s_udp_payload_axis_tready : out std_logic;
                   s_udp_payload_axis_tlast  : in  std_logic;
@@ -235,27 +235,27 @@ package components is
 
                   m_udp_hdr_valid           : out std_logic;
                   m_udp_hdr_ready           : in  std_logic;
-                  m_udp_eth_dest_mac        : out unsigned(47 downto 0);
-                  m_udp_eth_src_mac         : out unsigned(47 downto 0);
-                  m_udp_eth_type            : out unsigned(15 downto 0);
+                  m_udp_eth_dest_mac        : out std_ulogic_vector(47 downto 0);
+                  m_udp_eth_src_mac         : out std_ulogic_vector(47 downto 0);
+                  m_udp_eth_type            : out std_ulogic_vector(15 downto 0);
                   m_udp_ip_version          : out unsigned(3 downto 0);
                   m_udp_ip_ihl              : out unsigned(3 downto 0);
-                  m_udp_ip_dscp             : out unsigned(5 downto 0);
-                  m_udp_ip_ecn              : out unsigned(1 downto 0);
+                  m_udp_ip_dscp             : out std_ulogic_vector(5 downto 0);
+                  m_udp_ip_ecn              : out std_ulogic_vector(1 downto 0);
                   m_udp_ip_length           : out unsigned(15 downto 0);
                   m_udp_ip_identification   : out unsigned(15 downto 0);
                   m_udp_ip_flags            : out unsigned(2 downto 0);
                   m_udp_ip_fragment_offset  : out unsigned(12 downto 0);
                   m_udp_ip_ttl              : out unsigned(7 downto 0);
                   m_udp_ip_protocol         : out unsigned(7 downto 0);
-                  m_udp_ip_header_checksum  : out unsigned(15 downto 0);
+                  m_udp_ip_header_checksum  : out std_ulogic_vector(15 downto 0);
                   m_udp_ip_source_ip        : out unsigned(31 downto 0);
                   m_udp_ip_dest_ip          : out unsigned(31 downto 0);
                   m_udp_source_port         : out unsigned(15 downto 0);
                   m_udp_dest_port           : out unsigned(15 downto 0);
                   m_udp_length              : out unsigned(15 downto 0);
-                  m_udp_checksum            : out unsigned(15 downto 0);
-                  m_udp_payload_axis_tdata  : out unsigned(7 downto 0);
+                  m_udp_checksum            : out std_ulogic_vector(15 downto 0);
+                  m_udp_payload_axis_tdata  : out std_ulogic_vector(7 downto 0);
                   m_udp_payload_axis_tvalid : out std_logic;
                   m_udp_payload_axis_tready : in  std_logic;
                   m_udp_payload_axis_tlast  : out std_logic;

@@ -1,5 +1,6 @@
 [build-system]
 requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "verilog_ethernet"
@@ -13,3 +14,6 @@ dependencies = [
 ]
 [tool.setuptools.packages]
 find = {}
+
+[tool.setuptools]
+packages = ["verilog_ethernet"]

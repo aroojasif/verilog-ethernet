@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "verilog_ethernet"
+version = "1.0.0"
+description = "verilog-ethernet packaged for HDL use"
+readme = "README.md"
+
+[tool.setuptools]
+packages = ["verilog_ethernet"]

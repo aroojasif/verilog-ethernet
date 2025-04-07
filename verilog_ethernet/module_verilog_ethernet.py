@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Copyright 2023 Nico De Simone.
+# Copyright 2025 Arooj Asif.
 
 from pathlib import Path
 from tsfpga.module import BaseModule
